@@ -1,12 +1,12 @@
-#include "../../src/boat/boat.h"
-#include "../../include/minunit.h"
+#include "boat.h"
+#include "minunit.h"
 
 
 /* FACTORY TESTS  */
 MU_TEST (test_carrier_factory) {
 	Boat carrier;
 	
-	boat_facotry(&carrier, CARRIER);
+	boat_factory(&carrier, CARRIER);
 
 	mu_assert(carrier.boat_char == 'A', "The boat_char isn't `À`");
 	mu_assert(carrier.size == 5, "The size isn't `5`");
@@ -18,39 +18,39 @@ MU_TEST (test_battleship_factory) {
 	
 	boat_factory(&battleship, BATTLESHIP);
 	
-	mu_assert(carrier.boat_char == 'B', "The boat_char isn't `B`");
-	mu_assert(carrier.size == 4, "The size isn't `4`");
-	mu_assert(carrier.hits == 0, "The hits ins't `0`");		
+	mu_assert(battleship.boat_char == 'B', "The boat_char isn't `B`");
+	mu_assert(battleship.size == 4, "The size isn't `4`");
+	mu_assert(battleship.hits == 0, "The hits ins't `0`");		
 }
 
 MU_TEST (test_cruiser_factory) {
-	boat cruiser;
+	Boat cruiser;
 	
 	boat_factory(&cruiser, CRUISER);
 			
-	mu_assert(carrier.boat_char == 'C', "The boat_char isn't `C`");
-	mu_assert(carrier.size == 3, "The size isn't `3`");
-	mu_assert(carrier.hits == 0, "The hits ins't `0`");
+	mu_assert(cruiser.boat_char == 'C', "The boat_char isn't `C`");
+	mu_assert(cruiser.size == 3, "The size isn't `3`");
+	mu_assert(cruiser.hits == 0, "The hits ins't `0`");
 }
 
 MU_TEST (test_submarine_factory) {
-	boat submarine;
+	Boat submarine;
 	
 	boat_factory(&submarine, SUBMARINE);
 			
-	mu_assert(carrier.boat_char == 'S', "The boat_char isn't `S`");
-	mu_assert(carrier.size == 3, "The size isn't `3`");
-	mu_assert(carrier.hits == 0, "The hits ins't `0`");
+	mu_assert(submarine.boat_char == 'S', "The boat_char isn't `S`");
+	mu_assert(submarine.size == 3, "The size isn't `3`");
+	mu_assert(submarine.hits == 0, "The hits ins't `0`");
 }
 
 MU_TEST (test_destroyer_factory) {
-	boat destroyer;
+	Boat destroyer;
 	
 	boat_factory(&destroyer, DESTROYER);
 			
-	mu_assert(carrier.boat_char == 'D', "The boat_char isn't `D`");
-	mu_assert(carrier.size == 2, "The size isn't `2`");
-	mu_assert(carrier.hits == 0, "The hits ins't `0`");
+	mu_assert(destroyer.boat_char == 'D', "The boat_char isn't `D`");
+	mu_assert(destroyer.size == 2, "The size isn't `2`");
+	mu_assert(destroyer.hits == 0, "The hits ins't `0`");
 }
 
 /* TEST LOGIC  */
