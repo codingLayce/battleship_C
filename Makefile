@@ -16,16 +16,20 @@ boat.o: src/boat/boat.c
 player.o: src/player/player.c
 	gcc $(INCLUDES) -c src/player/player.c -o bin/.o_file/player.o $(CFLAGS)
 
+cell.o: src/cell/cell.c
+	gcc $(INCLUDES) -c src/cell/cell.c -o bin/.o_file/cell.o $(CFLAGS)
+
 test_boat: boat.o test/boat/boat.c
 	gcc $(INCLUDES) bin/.o_file/boat.o test/boat/boat.c -o bin/test_boat $(TEST_CFLAGS)
 
 test_player: player.o test/player/player.c 
 	gcc $(INCLUDES) bin/.o_file/player.o test/player/player.c -o bin/test_player $(TEST_CFLAGS)
 
-run_tests: test_player test_boat
-	bin/test_boat
-	echo "###################"
-	bin/test_player
+test_cell: cell.o boat.o test/cell/cell.c	
+	gcc $(INCLUDES) bin/.o_file/cell.o bin/.o_file/boat.o test/cell/cell.c  -o bin/test_cell $(TEST_CFLAGS)
+
+run_tests: test_player test_boat test_cell
+	bin/test_boat;bin/test_player;bin/test_cell
 
 clean:
 	rm -Rf *.o
