@@ -1,6 +1,7 @@
 #ifndef BOAT_H_GUARD
 #define BOAT_H_GUARD
 
+/* A, B, C, S, D  */
 typedef enum {CARRIER, BATTLESHIP, CRUISER, SUBMARINE, DESTROYER} Boat_type;
 
 typedef struct {

@@ -1,7 +1,7 @@
 #ifndef CELL_H_GUARD
 #define CELL_H_GUARD
 
-#include "../boat/boat.h"
+#include "boat.h"
 
 typedef struct {
 	Boat *boat;
