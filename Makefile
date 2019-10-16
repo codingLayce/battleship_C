@@ -40,8 +40,8 @@ test_player: player.o test/player/player.c
 test_cell: cell.o boat.o test/cell/cell.c	
 	gcc $(INCLUDES) bin/.o_file/cell.o bin/.o_file/boat.o test/cell/cell.c -o bin/test_cell $(TEST_CFLAGS)
 
-test_board: board.o cell.o test/board/board.c
-	gcc $(INCLUDES) bin/.o_file/board.o bin/.o_file/cell.o test/board/board.c -o bin/test_board $(TEST_CFLAGS)
+test_board: board.o cell.o test/board/board.c boat.o
+	gcc $(INCLUDES) bin/.o_file/board.o bin/.o_file/cell.o bin/.o_file/boat.o test/board/board.c -o bin/test_board $(TEST_CFLAGS)
 
 run_tests: test_player test_boat test_cell
 	bin/test_boat;bin/test_player;bin/test_cell

@@ -10,4 +10,6 @@ typedef struct {
 
 void new_cell(Cell *cell, Boat *boat, int touched);
 
+void set_boat(Cell *cell, Boat *boat);
+
 #endif
