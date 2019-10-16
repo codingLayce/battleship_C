@@ -20,3 +20,14 @@ void new_player (Player *player, int boats_alive, void (*play)(Cell board[BOARD_
 	player->play = play;
 }
 
+void hit (Cell *cell, Player *hit_player) {
+	hit_cell(cell);
+	
+	if (cell->boat != NULL) {
+		cell->boat->hits++;
+
+		if (cell->boat->size == cell->boat->hits) { /* If boat destroyed  */
+			hit_player->boats_alive--;	
+		}
+	}
+}

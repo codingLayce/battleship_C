@@ -29,4 +29,13 @@ int check_if_boat_feets_in_board (Cell board[BOARD_SIZE][BOARD_SIZE], Boat boat,
  */
 void place_boat (Cell board[BOARD_SIZE][BOARD_SIZE], Boat *boat, int row, int col, Direction direction);
 
+/* Checks if the shot is possible or not.
+ * A shot is possible if the target cell hasn't been shoted yet.
+ * @param board matrix to check
+ * @param row position of the target cell
+ * @param col position of the target cell
+ * @return 1 if the shot is possible, 0 otherwise
+ */
+int check_shot_possible (Cell board[BOARD_SIZE][BOARD_SIZE], int row, int col);
+
 #endif
