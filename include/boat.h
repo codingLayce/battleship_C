@@ -3,6 +3,7 @@
 
 /* A, B, C, S, D  */
 typedef enum {CARRIER, BATTLESHIP, CRUISER, SUBMARINE, DESTROYER} Boat_type;
+typedef enum {NORTH, EAST, SOUTH, WEST} Direction;
 
 typedef struct {
 	char boat_char;
