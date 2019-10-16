@@ -1,15 +1,16 @@
-CFLAGS=-Wall -Wextra -pedantic -ansi -W -g
+CFLAGS=-Wall -Wextra -pedantic -ansi -W -g -lncurses
 TEST_CFLAGS=-Wall -Wextra -pedantic -W -lrt -lm
 INCLUDES=-Iinclude -Ietc
 
 all: battleship
 
-battleship: main.o
-	gcc $(INCLUDES) bin/.o_file/main.o -o bin/battleship $(CFLAGS)
+battleship: main.o boat.o player.o cell.o view.o board_view.o
+	gcc $(INCLUDES) bin/.o_file/*.o -o bin/battleship $(CFLAGS)
 
 main.o: src/main.c
 	gcc -c $(INCLUDES) src/main.c -o bin/.o_file/main.o $(CFLAGS)
 
+# MODEL
 boat.o: src/boat/boat.c
 	gcc $(INCLUDES) -c src/boat/boat.c -o bin/.o_file/boat.o $(CFLAGS)
 
@@ -19,6 +20,15 @@ player.o: src/player/player.c
 cell.o: src/cell/cell.c
 	gcc $(INCLUDES) -c src/cell/cell.c -o bin/.o_file/cell.o $(CFLAGS)
 
+#VIEW
+view.o: src/view/view.c
+	gcc $(INCLUDES) -c src/view/view.c -o bin/.o_file/view.o $(CFLAGS)
+
+board_view.o: src/view/board_view.c	
+	gcc $(INCLUDES) -c src/view/board_view.c -o bin/.o_file/board_view.o $(CFLAGS)
+
+
+# TESTS
 test_boat: boat.o test/boat/boat.c
 	gcc $(INCLUDES) bin/.o_file/boat.o test/boat/boat.c -o bin/test_boat $(TEST_CFLAGS)
 
