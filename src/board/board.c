@@ -87,3 +87,7 @@ void place_boat (Cell board[BOARD_SIZE][BOARD_SIZE], Boat *boat, int row, int co
 			break;
 	}
 }
+
+int check_shot_possible (Cell board[BOARD_SIZE][BOARD_SIZE], int row, int col) {
+	return (board[row][col].touched == 0);
+}

@@ -34,11 +34,11 @@ board_view.o: src/view/board_view.c
 test_boat: boat.o test/boat/boat.c
 	gcc $(INCLUDES) bin/.o_file/boat.o test/boat/boat.c -o bin/test_boat $(TEST_CFLAGS)
 
-test_player: player.o test/player/player.c 
-	gcc $(INCLUDES) bin/.o_file/player.o test/player/player.c -o bin/test_player $(TEST_CFLAGS)
+test_player: player.o board.o cell.o boat.o test/player/player.c 
+	gcc $(INCLUDES) bin/.o_file/player.o bin/.o_file/board.o bin/.o_file/cell.o bin/.o_file/boat.o test/player/player.c -o bin/test_player $(TEST_CFLAGS)
 
-test_cell: cell.o boat.o test/cell/cell.c	
-	gcc $(INCLUDES) bin/.o_file/cell.o bin/.o_file/boat.o test/cell/cell.c -o bin/test_cell $(TEST_CFLAGS)
+test_cell: cell.o boat.o board.o player.o test/cell/cell.c	
+	gcc $(INCLUDES) bin/.o_file/cell.o bin/.o_file/boat.o bin/.o_file/board.o bin/.o_file/player.o test/cell/cell.c -o bin/test_cell $(TEST_CFLAGS)
 
 test_board: board.o cell.o test/board/board.c boat.o
 	gcc $(INCLUDES) bin/.o_file/board.o bin/.o_file/cell.o bin/.o_file/boat.o test/board/board.c -o bin/test_board $(TEST_CFLAGS)

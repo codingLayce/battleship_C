@@ -1,7 +1,22 @@
 #include <stdlib.h>
 #include "cell.h"
 #include "boat.h"
+#include "player.h"
+#include "board.h"
 #include "minunit.h"
+
+/* TEST HIT CELL  */
+MU_TEST (test_hit_simple_cell) {
+	Cell board[BOARD_SIZE][BOARD_SIZE];
+	Player player;
+
+	new_board(board);
+	player_factory(&player, HUMAN);
+
+	hit_cell(&board[0][0]);
+
+	mu_assert(board[0][0].touched == 1, "The cell isn't touched");
+}
 
 /* TEST SET BOAT  */
 MU_TEST (test_set_null_boat) {
@@ -63,6 +78,7 @@ MU_TEST_SUITE (test_suite) {
 	MU_RUN_TEST(test_new_cell_with_boat);
 	MU_RUN_TEST(test_set_null_boat);
 	MU_RUN_TEST(test_set_boat);
+	MU_RUN_TEST(test_hit_simple_cell);
 }
 
 int main (void) {
