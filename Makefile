@@ -4,7 +4,7 @@ INCLUDES=-Iinclude -Ietc
 
 all: battleship
 
-battleship: main.o boat.o player.o cell.o view.o board_view.o
+battleship: main.o boat.o player.o board.o cell.o view.o board_view.o
 	gcc $(INCLUDES) bin/.o_file/*.o -o bin/battleship $(CFLAGS)
 
 main.o: src/main.c
