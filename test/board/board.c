@@ -85,6 +85,23 @@ MU_TEST (test_boat_position_in_south) {
 	mu_assert(res == 1, "The boat doesn't feets in board");
 }
 
+MU_TEST (test_boat_position_collide_south) {
+	int res;
+	Boat cruiser;
+	Boat cruiser2;
+	Cell board[BOARD_SIZE][BOARD_SIZE];
+
+	new_board(board);
+	boat_factory(&cruiser, CRUISER);
+	boat_factory(&cruiser2, CRUISER);
+
+	place_boat(board, &cruiser2, 1, 0, WEST);
+	
+	res = check_if_boat_feets_in_board(board, cruiser, 0, 1, NORTH);	
+
+	mu_assert(res == 0, "The boat feets in board");
+}
+
 MU_TEST (test_boat_position_out_east) {
 	int res;
 	Boat cruiser;
@@ -109,6 +126,23 @@ MU_TEST (test_boat_position_in_east) {
 	res = check_if_boat_feets_in_board(board, cruiser, 6, 5, WEST);
 
 	mu_assert(res == 1, "The boat doesn't feets in board");
+}
+
+MU_TEST (test_boat_position_collide_east) {
+	int res;
+	Boat cruiser;
+	Boat cruiser2;
+	Cell board[BOARD_SIZE][BOARD_SIZE];
+
+	new_board(board);
+	boat_factory(&cruiser, CRUISER);
+	boat_factory(&cruiser2, CRUISER);
+
+	place_boat(board, &cruiser2, 1, 0, NORTH);
+	
+	res = check_if_boat_feets_in_board(board, cruiser, 1, 0, WEST);	
+
+	mu_assert(res == 0, "The boat feets in board");
 }
 
 MU_TEST (test_boat_position_out_north) {
@@ -137,6 +171,23 @@ MU_TEST (test_boat_position_in_north) {
 	mu_assert(res == 1, "The boat doesn't feets in board");
 }
 
+MU_TEST (test_boat_position_collide_north) {
+	int res;
+	Boat cruiser;
+	Boat cruiser2;
+	Cell board[BOARD_SIZE][BOARD_SIZE];
+
+	new_board(board);
+	boat_factory(&cruiser, CRUISER);
+	boat_factory(&cruiser2, CRUISER);
+
+	place_boat(board, &cruiser2, 1, 0, WEST);
+	
+	res = check_if_boat_feets_in_board(board, cruiser, 2, 1, SOUTH);	
+
+	mu_assert(res == 0, "The boat feets in board");
+}
+
 MU_TEST (test_boat_position_out_west) {
 	int res;
 	Boat cruiser;
@@ -163,6 +214,23 @@ MU_TEST (test_boat_position_in_west) {
 	mu_assert(res == 1, "The boat doesn't feets in board");
 }
 
+MU_TEST (test_boat_position_collide_west) {
+	int res;
+	Boat cruiser;
+	Boat cruiser2;
+	Cell board[BOARD_SIZE][BOARD_SIZE];
+
+	new_board(board);
+	boat_factory(&cruiser, CRUISER);
+	boat_factory(&cruiser2, CRUISER);
+
+	place_boat(board, &cruiser2, 1, 0, NORTH);
+	
+	res = check_if_boat_feets_in_board(board, cruiser, 1, 0, EAST);	
+
+	mu_assert(res == 0, "The boat feets in board");
+}
+
 /* TEST INITIALIZATION  */
 MU_TEST (test_new_board) {
 	Cell board[BOARD_SIZE][BOARD_SIZE];	
@@ -180,12 +248,16 @@ MU_TEST_SUITE (test_suite) {
 	MU_RUN_TEST(test_new_board);
 	MU_RUN_TEST(test_boat_position_out_north);
 	MU_RUN_TEST(test_boat_position_in_north);
+	MU_RUN_TEST(test_boat_position_collide_north);
 	MU_RUN_TEST(test_boat_position_out_east);
 	MU_RUN_TEST(test_boat_position_in_east);
+	MU_RUN_TEST(test_boat_position_collide_east);
 	MU_RUN_TEST(test_boat_position_out_west);
 	MU_RUN_TEST(test_boat_position_in_west);
+	MU_RUN_TEST(test_boat_position_collide_west);
 	MU_RUN_TEST(test_boat_position_out_south);
 	MU_RUN_TEST(test_boat_position_in_south);
+	MU_RUN_TEST(test_boat_position_collide_south);
 	MU_RUN_TEST(test_boat_placement_north);
 	MU_RUN_TEST(test_boat_placement_east);
 	MU_RUN_TEST(test_boat_placement_south);
