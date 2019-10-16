@@ -16,6 +16,7 @@ void init_view(){
 	init_pair(BOAT_PAIR, COLOR_WHITE, COLOR_BLACK);
 	init_pair(TOUCHED_SEA_PAIR, COLOR_GREEN, COLOR_BLACK);
 	init_pair(TOUCHED_BOAT_PAIR, COLOR_RED, COLOR_BLACK);
+	init_pair(SELECTED_PAIR, COLOR_BLACK, COLOR_WHITE);
 }
 
 void end_view(){

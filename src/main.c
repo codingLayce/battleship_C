@@ -5,15 +5,25 @@
 int main(){
 	WINDOW *board_win;
 	Cell board[BOARD_SIZE][BOARD_SIZE];
-
+	char *selected;
+	Boat cruiser;
 	init_view();
 
 	new_board(board);
 
+	boat_factory(&cruiser, CRUISER);
+	place_boat(board, &cruiser, 5, 5, NORTH);
 	board_win = create_board_win(0, 0, 50, 50);
+	
+	board[5][5].touched = 1;
+	board[4][4].touched = 1;
 
-	print_board(board, board_win, "test Board");
+	print_board_without_boat(board, board_win, "test Board");
 
+	selected = get_coords(board, board_win); 
+	
+	printf("%s\n", selected);
+	free(selected);
 	wrefresh(board_win);
 	wgetch(board_win);
 

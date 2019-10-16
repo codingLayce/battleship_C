@@ -6,11 +6,11 @@ WINDOW *create_board_win (int start_row, int start_col, int height, int width){
 	return result;
 }
 
-void print_board (Cell board[BOARD_SIZE][BOARD_SIZE], WINDOW *board_win, char *board_name){
+void print_board (Cell board[BOARD_SIZE][BOARD_SIZE], WINDOW *board_win, char *board_name, int print_boat, int selected_row, int selected_col){
 	int row, col;
 	int row_offset = 2, col_offset = 2;
 
-	wprintw(board_win, board_name);
+	mvwprintw(board_win, 0, 4, board_name);
 
 	/* horizontal help */
 	for (col = 0; col < BOARD_SIZE; col++){
@@ -27,25 +27,79 @@ void print_board (Cell board[BOARD_SIZE][BOARD_SIZE], WINDOW *board_win, char *b
 	for (row = 0; row < BOARD_SIZE; row++){
 		for (col = 0; col < BOARD_SIZE; col++){
 			Cell c = board[row][col];
-			if (c.boat == 0 && c.touched == 0){
-				wattron(board_win, COLOR_PAIR(SEA_PAIR));
-				mvwprintw(board_win, row + row_offset, col * 2 + col_offset, "~");
-				wattroff(board_win, COLOR_PAIR(SEA_PAIR));
-			} else if (c.boat == 0 && c.touched == 1){
-				wattron(board_win, COLOR_PAIR(TOUCHED_SEA_PAIR));
-				mvwprintw(board_win, row + row_offset, col * 2 + col_offset, "o");
-				wattroff(board_win, COLOR_PAIR(TOUCHED_SEA_PAIR));
-			} else if (c.boat != 0 && c.touched == 0){
-				wattron(board_win, COLOR_PAIR(BOAT_PAIR));
-				mvwprintw(board_win, row + row_offset, col * 2 + col_offset, "%c", c.boat->boat_char);
-				wattroff(board_win, COLOR_PAIR(BOAT_PAIR));
+			if (row == selected_row || col == selected_col)
+				wattron(board_win, A_REVERSE);
+			if (c.boat == 0){
+				if (c.touched == 1){
+					wattron(board_win, COLOR_PAIR(TOUCHED_SEA_PAIR));
+					mvwprintw(board_win, row + row_offset, col * 2 + col_offset, "o");
+					wattroff(board_win, COLOR_PAIR(TOUCHED_SEA_PAIR));
+
+				} else {
+					wattron(board_win, COLOR_PAIR(SEA_PAIR));
+					mvwprintw(board_win, row + row_offset, col * 2 + col_offset, "~");
+					wattroff(board_win, COLOR_PAIR(SEA_PAIR));
+				}
+			} else if (print_boat == 1){
+				if (c.touched == 0){
+					wattron(board_win, COLOR_PAIR(BOAT_PAIR));
+					mvwprintw(board_win, row + row_offset, col * 2 + col_offset, "%c", c.boat->boat_char);
+					wattroff(board_win, COLOR_PAIR(BOAT_PAIR));
+				} else {
+					wattron(board_win, COLOR_PAIR(TOUCHED_BOAT_PAIR));
+					mvwprintw(board_win, row + row_offset, col * 2 + col_offset, "%c", c.boat->boat_char);
+					wattroff(board_win, COLOR_PAIR(TOUCHED_BOAT_PAIR));
+				}
 			} else {
-				wattron(board_win, COLOR_PAIR(TOUCHED_BOAT_PAIR));
-				mvwprintw(board_win, row + row_offset, col * 2 + col_offset, "%c", c.boat->boat_char);
-				wattroff(board_win, COLOR_PAIR(TOUCHED_BOAT_PAIR));
+				if (c.touched == 1){
+					wattron(board_win, COLOR_PAIR(TOUCHED_BOAT_PAIR));
+					mvwprintw(board_win, row + row_offset, col * 2 + col_offset, "*", c.boat->boat_char);
+					wattroff(board_win, COLOR_PAIR(BOAT_PAIR));
+				} else {
+					wattron(board_win, COLOR_PAIR(SEA_PAIR));
+					mvwprintw(board_win, row + row_offset, col * 2 + col_offset, "~");
+					wattroff(board_win, COLOR_PAIR(SEA_PAIR));
+				}
 			}
-			
+
+
+			if (row == selected_row || col == selected_col)
+				wattroff(board_win, A_REVERSE);
 		}
 	}
 	wrefresh(board_win);
+}
+
+void print_board_with_boat(Cell board[BOARD_SIZE][BOARD_SIZE], WINDOW *board_win, char *board_name){
+	print_board(board, board_win, board_name, 1, -1, -1);
+}
+
+void print_board_without_boat(Cell board[BOARD_SIZE][BOARD_SIZE], WINDOW *board_win, char *board_name){
+	print_board(board, board_win, board_name, 0, -1, -1);
+}
+
+void print_board_with_selection(Cell board[BOARD_SIZE][BOARD_SIZE], WINDOW *board_win, char *board_name, int selected_row, int selected_col){
+	print_board(board, board_win, board_name, 1, selected_row, selected_col);
+}
+
+char *get_coords (Cell board[BOARD_SIZE][BOARD_SIZE], WINDOW *board_win){
+	int row = 0, col = 0, ch;
+	char *result = malloc(3 * sizeof(char));
+	do {
+		print_board_with_selection(board, board_win, "Player size", row, col);
+		ch = wgetch(board_win);
+
+		if (ch == 'z' && row > 0){
+			row--;
+		} else if (ch == 's' && row < BOARD_SIZE - 1){
+			row++;
+		} else if (ch == 'd' && col < BOARD_SIZE - 1){
+			col++;
+		} else if (ch == 'q' && col > 0){
+			col--;
+		}
+
+	}while (ch != '\n');
+	sprintf(result, "%c%d", 'A' + row, col);
+	return result;
 }
