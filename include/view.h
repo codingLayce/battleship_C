@@ -3,7 +3,12 @@
 
 #include <ncurses.h>
 
-void init_view();
-void end_view();
+#define POP_UP_PAIR 6
+
+void init_view ();
+void end_view ();
+
+/* @return the selected choice */
+int create_pop_up (int start_row, int start_col, int height, int width, char *ask, char * choices, int number);
 
 #endif

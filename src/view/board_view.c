@@ -103,3 +103,50 @@ char *get_coords (Cell board[BOARD_SIZE][BOARD_SIZE], WINDOW *board_win){
 	sprintf(result, "%c%d", 'A' + row, col);
 	return result;
 }
+
+char *ask_boat_position(WINDOW *board_win, Boat boat, Direction *direction){
+	Cell board[BOARD_SIZE][BOARD_SIZE];
+	int row = 0, col = 0;
+	int ch;
+	char *result = malloc(3 * sizeof(char));;
+	*direction = NORTH;
+
+	do {
+		new_board(board);
+		place_boat(board, &boat, row, col, *direction);
+		print_board_with_boat(board, board_win, "Player size");
+		ch = wgetch(board_win);
+		new_board(board);
+		if (ch == 'z' && row > 0){
+			if (check_if_boat_feets_in_board (board, boat, row - 1, col, *direction) == 1)
+				row--;
+		} else if (ch == 's' && row < BOARD_SIZE - 1){
+			if (check_if_boat_feets_in_board (board, boat, row + 1, col, *direction) == 1)
+				row++;
+		} else if (ch == 'd' && col < BOARD_SIZE - 1){
+			if (check_if_boat_feets_in_board (board, boat, row, col + 1, *direction))
+				col++;
+		} else if (ch == 'q' && col > 0){
+			if (check_if_boat_feets_in_board (board, boat, row, col - 1, *direction))
+				col--;
+		} else if (ch == 'r') {
+			if (*direction == NORTH){
+				if (check_if_boat_feets_in_board (board, boat, row, col, EAST))
+					*direction = EAST;
+			} else if (*direction == EAST){
+				if (check_if_boat_feets_in_board (board, boat, row, col, SOUTH))
+					*direction = SOUTH;
+			} else if (*direction == SOUTH){
+				if (check_if_boat_feets_in_board (board, boat, row, col, WEST))
+					*direction = WEST;
+			} else {
+				if (check_if_boat_feets_in_board (board, boat, row, col, NORTH))
+					*direction = NORTH;
+			}
+		}
+
+	}while (ch != '\n');
+	sprintf(result, "%c%d", 'A' + row, col);
+	return result;
+
+}

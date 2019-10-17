@@ -18,8 +18,8 @@ int check_if_boat_feets_in_board(Cell board[BOARD_SIZE][BOARD_SIZE], Boat boat, 
 	int i;
 	switch (direction) {
 		case SOUTH: /* Back of the boat goes to NORTH  */
-			if (row - boat.size >= 0) {
-				for (i = row; i > row - boat.size; i--) {
+			if (row + 1 - boat.size >= 0) {
+				for (i = row; i > row + 1 - boat.size; i--) {
 					if (board[i][col].boat != NULL) {
 						return 0;
 					}
@@ -28,7 +28,7 @@ int check_if_boat_feets_in_board(Cell board[BOARD_SIZE][BOARD_SIZE], Boat boat, 
 			}
 			return 0;
 		case WEST: /* Back of the boat goes to EAST  */	
-			if (col + boat.size < BOARD_SIZE) {
+			if (col + boat.size <= BOARD_SIZE) {
 				for (i = col; i < col + boat.size; i++) {
 					if (board[row][i].boat != NULL) {
 						return 0;
@@ -38,7 +38,7 @@ int check_if_boat_feets_in_board(Cell board[BOARD_SIZE][BOARD_SIZE], Boat boat, 
 			}
 			return 0;
 		case NORTH: /* Back of the boat goes to SOUTH  */
-			if (row + boat.size < BOARD_SIZE) {
+			if (row + boat.size <= BOARD_SIZE) {
 				for (i = row; i < row + boat.size; i++) {
 					if (board[i][col].boat != NULL) {
 						return 0;
@@ -48,8 +48,8 @@ int check_if_boat_feets_in_board(Cell board[BOARD_SIZE][BOARD_SIZE], Boat boat, 
 			}
 			return 0;
 		case EAST: /* Back of the boat goes to WEST  */
-			if (col - boat.size >= 0) {
-				for (i = col; i > col + boat.size; i--) {
+			if (col + 1 - boat.size >= 0) {
+				for (i = col; i > col + 1 - boat.size; i--) {
 					if (board[row][i].boat != NULL) {
 						return 0;
 					}
