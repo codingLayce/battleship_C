@@ -1,6 +1,7 @@
 #ifndef PLAYER_H_GUARD
 #define PLAYER_H_GUARD
 
+#include <string.h>
 #include <time.h>
 #include "cell.h"
 #include "board.h"
@@ -15,13 +16,14 @@ typedef struct Player Player;
 
 struct Player {
 	int boats_alive;
-	void (*play) (WINDOW *win, Cell board[BOARD_SIZE][BOARD_SIZE], Player *player);
+	void (*play) (WINDOW *win, Cell board[BOARD_SIZE][BOARD_SIZE], Player *human, Player *ia, int turn);
 	Boat *boats[5];
+	char *history[100];
 };
 
 void player_factory (Player *player, Player_type type);
 
-void new_player (Player *player, int boats_alive, void (*play)(WINDOW *win, Cell board[BOARD_SIZE][BOARD_SIZE], Player *player));
+void new_player (Player *player, int boats_alive, void (*play)(WINDOW *win, Cell board[BOARD_SIZE][BOARD_SIZE], Player *human, Player *ia, int turn));
 
 void hit (Cell *cell, Player *hit_player);
 
@@ -33,8 +35,8 @@ void place_ia_boats(Cell board[BOARD_SIZE][BOARD_SIZE], Player *player);
 
 void unload_boats(Player *player);
 
-void player_play(WINDOW *win, Cell board[BOARD_SIZE][BOARD_SIZE], Player *ia);
+void player_play(WINDOW *win, Cell board[BOARD_SIZE][BOARD_SIZE], Player *human, Player *ia, int turn);
 
-void ia_play(WINDOW *win, Cell board[BOARD_SIZE][BOARD_SIZE], Player *human);
+void ia_play(WINDOW *win, Cell board[BOARD_SIZE][BOARD_SIZE], Player *human, Player *ia, int turn);
 
 #endif

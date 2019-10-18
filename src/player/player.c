@@ -15,7 +15,7 @@ void player_factory(Player *player, Player_type type){
 	}
 }
 
-void new_player (Player *player, int boats_alive, void (*play)(WINDOW *win, Cell board[BOARD_SIZE][BOARD_SIZE], Player *player)){
+void new_player (Player *player, int boats_alive, void (*play)(WINDOW *win, Cell board[BOARD_SIZE][BOARD_SIZE], Player *human, Player*ia, int turn)){
 	int i;
 	Boat_type boats[5] = {CARRIER, BATTLESHIP, CRUISER, SUBMARINE, DESTROYER};
 
@@ -96,7 +96,7 @@ void place_ia_boats(Cell board[BOARD_SIZE][BOARD_SIZE], Player *player) {
 	}
 }
 
-void player_play (WINDOW *win, Cell board[BOARD_SIZE][BOARD_SIZE], Player *ia) {
+void player_play (WINDOW *win, Cell board[BOARD_SIZE][BOARD_SIZE], Player *human, Player *ia, int turn) {
 	char *coords;
 	int row, col;
 
@@ -106,25 +106,36 @@ void player_play (WINDOW *win, Cell board[BOARD_SIZE][BOARD_SIZE], Player *ia) {
 		row = coords[0] - 'A';
 		col = coords[1] - '0';
 
-		free(coords);
+		if (check_shot_possible(board, row, col) == 0) {
+			free(coords);
+		}
 	} while (check_shot_possible(board, row, col) == 0);
 
 	hit(&board[row][col], ia);
+	human->history[turn] = malloc(sizeof(char) * 2);
+	strcpy(human->history[turn], coords); 
+	free(coords);
 }
 
-void ia_play (WINDOW *win, Cell board[BOARD_SIZE][BOARD_SIZE], Player *human) {
+void ia_play (WINDOW *win, Cell board[BOARD_SIZE][BOARD_SIZE], Player *human, Player *ia, int turn) {
 	int row, col;
 	const int min_row = 0;
 	const int min_col = 0;
 	const int max_row = 9;
 	const int max_col = 9;
+	char coords[2];
 
 	srand(time(NULL));
-
+		
 	do {
 		row = min_row + rand() % (max_row + 1 - min_row);
 		col = min_col + rand() % (max_col + 1 - min_col);
 	} while (check_shot_possible(board, row, col) == 0);
 
+	coords[0] = row + 'A';
+	coords[1] = col + '0';
+
 	hit(&board[row][col], human);
+	ia->history[turn] = malloc(sizeof(char) * 2);
+	strcpy(ia->history[turn], coords);
 }
