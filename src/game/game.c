@@ -11,7 +11,11 @@ void main_loop(WINDOW *win) {
 	new_board(ia_board);
 
 	ask_player_to_place_boats(win, human_board, &human);
+	place_ia_boats(ia_board, &ia);
 
-	print_board_with_boat(human_board, win, "Human board");
+	print_board_with_boat(ia_board, win, "IA board");
+
+	unload_boats(&human);	
+	unload_boats(&ia);
 }
 
