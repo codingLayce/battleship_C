@@ -8,5 +8,6 @@
 #define TOUCHED_SEA_PAIR 3
 #define TOUCHED_BOAT_PAIR 4 
 #define SELECTED_PAIR 5
+#define SINK_BOAT_PAIR 6
 
 #endif

@@ -10,7 +10,6 @@ void print_board (Cell board[BOARD_SIZE][BOARD_SIZE], WINDOW *board_win, char *b
 	int row, col;
 	int row_offset = 2, col_offset = 2;
 	char boat_char;
-	char tile[2];
 	
 	mvwprintw(board_win, 0, 4, board_name);
 
@@ -29,51 +28,51 @@ void print_board (Cell board[BOARD_SIZE][BOARD_SIZE], WINDOW *board_win, char *b
 	for (row = 0; row < BOARD_SIZE; row++){
 		for (col = 0; col < BOARD_SIZE; col++){
 			Cell c = board[row][col];
-		
+			if (row == selected_row || col == selected_col)
+				wattron(board_win, COLOR_PAIR(SELECTED_PAIR));
 			if (c.boat == 0){
 				if (c.touched == 1){
 					wattron(board_win, COLOR_PAIR(TOUCHED_SEA_PAIR));
-					strcpy(tile, "o");
+					mvwprintw(board_win, row + row_offset, col * 2 + col_offset, "o");
+					wattroff(board_win, COLOR_PAIR(TOUCHED_SEA_PAIR));
 
 				} else {
 					wattron(board_win, COLOR_PAIR(SEA_PAIR));
-					strcpy(tile,  "~");
+					mvwprintw(board_win, row + row_offset, col * 2 + col_offset, "~");
+					wattroff(board_win, COLOR_PAIR(SEA_PAIR));
 				}
 			} else if (print_boat == 1){
 				boat_char = c.boat->boat_char;
 				if (c.touched == 0){
 					wattron(board_win, COLOR_PAIR(BOAT_PAIR));
-					sprintf(tile, "%c", boat_char);
+					mvwprintw(board_win, row + row_offset, col * 2 + col_offset, "%c", boat_char);
+					wattroff(board_win, COLOR_PAIR(BOAT_PAIR));
 				} else {
 					wattron(board_win, COLOR_PAIR(TOUCHED_BOAT_PAIR));
-					sprintf(tile, "%c", boat_char);
+					mvwprintw(board_win, row + row_offset, col * 2 + col_offset, "%c", boat_char);
+					wattroff(board_win, COLOR_PAIR(TOUCHED_BOAT_PAIR));
 				}
 			} else {
 				if (c.touched == 1){
 					if (c.boat->hits != c.boat->size) {
 						wattron(board_win, COLOR_PAIR(TOUCHED_BOAT_PAIR));
-						strcpy(tile, "*");
+						mvwprintw(board_win, row + row_offset, col * 2 + col_offset, "*");
+						wattroff(board_win, COLOR_PAIR(TOUCHED_BOAT_PAIR));
 					} else {
 						wattron(board_win, COLOR_PAIR(SINK_BOAT_PAIR));
-						strcpy(tile,  "*");
+						mvwprintw(board_win, row + row_offset, col * 2 + col_offset, "*");
+						wattroff(board_win, COLOR_PAIR(SINK_BOAT_PAIR));
 					}
 				} else {
 					wattron(board_win, COLOR_PAIR(SEA_PAIR));
-					strcpy(tile, "~");
+					mvwprintw(board_win, row + row_offset, col * 2 + col_offset, "~");
+					wattroff(board_win, COLOR_PAIR(SEA_PAIR));
 				}
 			}
+
+
 			if (row == selected_row || col == selected_col)
-				wattron(board_win, COLOR_PAIR(SELECTED_PAIR));
-			
-			mvwprintw(board_win, row + row_offset, col * 2 + col_offset, tile);
-			wattroff(board_win, COLOR_PAIR(SEA_PAIR));
-			wattroff(board_win, COLOR_PAIR(BOAT_PAIR));
-			wattroff(board_win, COLOR_PAIR(SINK_BOAT_PAIR));
-			wattroff(board_win, COLOR_PAIR(TOUCHED_BOAT_PAIR));
-			wattroff(board_win, COLOR_PAIR(SEA_PAIR));
-			wattroff(board_win, COLOR_PAIR(TOUCHED_BOAT_PAIR));
-			wattroff(board_win, COLOR_PAIR(TOUCHED_SEA_PAIR));
-			wattroff(board_win, COLOR_PAIR(SELECTED_PAIR));
+				wattroff(board_win, COLOR_PAIR(SELECTED_PAIR));
 		}
 	}
 	wrefresh(board_win);
