@@ -7,13 +7,7 @@
 
 #include "board.h"
 #include "boat.h"
-
-#define SEA_PAIR 1 
-#define BOAT_PAIR 2
-#define TOUCHED_SEA_PAIR 3
-#define TOUCHED_BOAT_PAIR 4 
-#define SELECTED_PAIR 5
-
+#include "config.h"
 
 WINDOW *create_board_win(int start_row, int start_col, int height, int width);
 Direction get_direction();
