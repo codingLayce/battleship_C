@@ -91,3 +91,14 @@ void place_boat (Cell board[BOARD_SIZE][BOARD_SIZE], Boat *boat, int row, int co
 int check_shot_possible (Cell board[BOARD_SIZE][BOARD_SIZE], int row, int col) {
 	return (board[row][col].touched == 0);
 }
+
+void board_clone (Cell board_cloned[BOARD_SIZE][BOARD_SIZE], Cell board[BOARD_SIZE][BOARD_SIZE]){
+	int row, col;
+	for (row = 0; row < BOARD_SIZE; row++){
+		for (col = 0; col < BOARD_SIZE; col++){
+			Cell c = board[row][col];
+			new_cell(&board_cloned[row][col], c.boat, c.touched);
+		}
+	}
+}
+

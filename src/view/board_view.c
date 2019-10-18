@@ -104,7 +104,7 @@ char *get_coords (Cell board[BOARD_SIZE][BOARD_SIZE], WINDOW *board_win){
 	return result;
 }
 
-char *ask_boat_position(WINDOW *board_win, Boat boat, Direction *direction){
+char *ask_boat_position(WINDOW *board_win, Cell origin_board[BOARD_SIZE][BOARD_SIZE],  Boat boat, Direction *direction){
 	Cell board[BOARD_SIZE][BOARD_SIZE];
 	int row = 0, col = 0;
 	int ch;
@@ -112,7 +112,7 @@ char *ask_boat_position(WINDOW *board_win, Boat boat, Direction *direction){
 	*direction = NORTH;
 
 	do {
-		new_board(board);
+		board_clone(board, origin_board);
 		place_boat(board, &boat, row, col, *direction);
 		print_board_with_boat(board, board_win, "Player size");
 		ch = wgetch(board_win);
@@ -143,8 +143,7 @@ char *ask_boat_position(WINDOW *board_win, Boat boat, Direction *direction){
 				if (check_if_boat_feets_in_board (board, boat, row, col, NORTH))
 					*direction = NORTH;
 			}
-		}
-
+		}	
 	}while (ch != '\n');
 	sprintf(result, "%c%d", 'A' + row, col);
 	return result;

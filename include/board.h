@@ -38,4 +38,6 @@ void place_boat (Cell board[BOARD_SIZE][BOARD_SIZE], Boat *boat, int row, int co
  */
 int check_shot_possible (Cell board[BOARD_SIZE][BOARD_SIZE], int row, int col);
 
+void board_clone(Cell board_clonde[BOARD_SIZE][BOARD_SIZE], Cell board[BOARD_SIZE][BOARD_SIZE]);
+
 #endif
