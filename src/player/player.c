@@ -4,10 +4,10 @@
 void player_factory(Player *player, Player_type type){
 	switch (type) {
 		case IA:
-			new_player(player, 0, NULL);
+			new_player(player, 0, player_play);
 			break;
 		case HUMAN:
-			new_player(player, 0, NULL);
+			new_player(player, 0, ia_play);
 			break;
 		default:
 			player = NULL;
@@ -15,7 +15,7 @@ void player_factory(Player *player, Player_type type){
 	}
 }
 
-void new_player (Player *player, int boats_alive, void (*play)(Cell board[BOARD_SIZE][BOARD_SIZE])){
+void new_player (Player *player, int boats_alive, void (*play)(WINDOW *win, Cell board[BOARD_SIZE][BOARD_SIZE], Player *player)){
 	int i;
 	Boat_type boats[5] = {CARRIER, BATTLESHIP, CRUISER, SUBMARINE, DESTROYER};
 
@@ -92,5 +92,26 @@ void place_ia_boats(Cell board[BOARD_SIZE][BOARD_SIZE], Player *player) {
 		} while (check_if_boat_feets_in_board(board, *player->boats[i], row, col, dirs[dir]) == 0);
 		
 		place_boat(board, player->boats[i], row, col, dirs[dir]);
+		player->boats_alive++;
 	}
+}
+
+void player_play (WINDOW *win, Cell board[BOARD_SIZE][BOARD_SIZE], Player *ia) {
+	char *coords;
+	int row, col;
+
+	do {
+		coords = get_coords(board, win);
+		
+		row = coords[0] - 'A';
+		col = coords[1] - '0';
+
+		free(coords);
+	} while (check_shot_possible(board, row, col) == 0);
+
+	hit(&board[row][col], ia);
+}
+
+void ia_play (WINDOW *win, Cell board[BOARD_SIZE][BOARD_SIZE], Player *human) {
+	return;
 }

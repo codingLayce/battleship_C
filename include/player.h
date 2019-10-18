@@ -11,15 +11,17 @@
 
 typedef enum {HUMAN, IA} Player_type;
 
-typedef struct {
+typedef struct Player Player;
+
+struct Player {
 	int boats_alive;
-	void (*play) (Cell board[BOARD_SIZE][BOARD_SIZE]);
+	void (*play) (WINDOW *win, Cell board[BOARD_SIZE][BOARD_SIZE], Player *player);
 	Boat *boats[5];
-} Player;
+};
 
 void player_factory (Player *player, Player_type type);
 
-void new_player (Player *player, int boats_alive, void (*play)(Cell board[BOARD_SIZE][BOARD_SIZE]));
+void new_player (Player *player, int boats_alive, void (*play)(WINDOW *win, Cell board[BOARD_SIZE][BOARD_SIZE], Player *player));
 
 void hit (Cell *cell, Player *hit_player);
 
@@ -30,5 +32,9 @@ void ask_player_to_place_one_boat(WINDOW *win, Cell board[BOARD_SIZE][BOARD_SIZE
 void place_ia_boats(Cell board[BOARD_SIZE][BOARD_SIZE], Player *player);
 
 void unload_boats(Player *player);
+
+void player_play(WINDOW *win, Cell board[BOARD_SIZE][BOARD_SIZE], Player *ia);
+
+void ia_play(WINDOW *win, Cell board[BOARD_SIZE][BOARD_SIZE], Player *human);
 
 #endif
