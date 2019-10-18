@@ -20,5 +20,5 @@ void print_board_without_boat(Cell board[BOARD_SIZE][BOARD_SIZE], WINDOW *board_
 void print_board_with_selection(Cell board[BOARD_SIZE][BOARD_SIZE], WINDOW *board_win, char *board_name, int selected_row, int selected_col);
 
 char *get_coords(Cell board[BOARD_SIZE][BOARD_SIZE], WINDOW *board_win);
-char *ask_boat_position(WINDOW *board_win, Boat boat, Direction *direction);
+char *ask_boat_position(WINDOW *board_win, Cell origin_board[BOARD_SIZE][BOARD_SIZE], Boat boat, Direction *direction);
 #endif

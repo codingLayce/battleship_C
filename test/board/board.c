@@ -170,7 +170,7 @@ MU_TEST (test_boat_position_out_west) {
 	new_board(board);
 	boat_factory(&cruiser, CRUISER);
 
-	res = check_if_boat_feets_in_board(board, cruiser, 8, 2, EAST);
+	res = check_if_boat_feets_in_board(board, cruiser, 8, 1, EAST);
 
 	mu_assert(res == 0, "The boat feets in board");
 }
@@ -200,6 +200,28 @@ MU_TEST (test_new_board) {
 	mu_assert(board[BOARD_SIZE-1][BOARD_SIZE-1].boat== NULL, "The touched isn't `NULL`");
 }
 
+/* TEST CLONE */
+MU_TEST (test_clone) {
+	Cell board[BOARD_SIZE][BOARD_SIZE];
+	Cell board_cloned[BOARD_SIZE][BOARD_SIZE];
+	Boat cruiser;
+
+	boat_factory(&cruiser, CRUISER);
+	new_board(board);
+
+	board[0][1].touched = 1;
+	board[0][0].touched = 1;
+
+	place_boat(board, &cruiser, 0, 0, NORTH);
+
+	board_clone(board_cloned, board);
+
+	mu_assert(board_cloned[0][0].boat != NULL, "The boats doesn't seems to be cloned.");
+	mu_assert(board_cloned[0][0].touched == 1, "The touched cell isn't cloned (Boat on it).");
+	mu_assert(board_cloned[0][1].touched == 1, "The touched cell isn't cloned.");
+	mu_assert(board_cloned[0][0].boat == &cruiser, "The boat is not deep cloned.");
+}
+
 /* TEST_LOGIC  */
 MU_TEST_SUITE (test_suite) {
 	MU_RUN_TEST(test_new_board);
@@ -217,6 +239,7 @@ MU_TEST_SUITE (test_suite) {
 	MU_RUN_TEST(test_boat_placement_west);
 	MU_RUN_TEST(test_shot_not_possible);
 	MU_RUN_TEST(test_shot_possible);
+	MU_RUN_TEST(test_clone);
 }
 
 int main(void) {
