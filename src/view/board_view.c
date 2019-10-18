@@ -81,7 +81,7 @@ void print_board_without_boat(Cell board[BOARD_SIZE][BOARD_SIZE], WINDOW *board_
 }
 
 void print_board_with_selection(Cell board[BOARD_SIZE][BOARD_SIZE], WINDOW *board_win, char *board_name, int selected_row, int selected_col){
-	print_board(board, board_win, board_name, 1, selected_row, selected_col);
+	print_board(board, board_win, board_name, 0, selected_row, selected_col);
 }
 
 char *get_coords (Cell board[BOARD_SIZE][BOARD_SIZE], WINDOW *board_win){

@@ -4,10 +4,10 @@
 void player_factory(Player *player, Player_type type){
 	switch (type) {
 		case IA:
-			new_player(player, 0, player_play);
+			new_player(player, 0, ia_play);
 			break;
 		case HUMAN:
-			new_player(player, 0, ia_play);
+			new_player(player, 0, player_play);
 			break;
 		default:
 			player = NULL;
