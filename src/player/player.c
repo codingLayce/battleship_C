@@ -113,5 +113,18 @@ void player_play (WINDOW *win, Cell board[BOARD_SIZE][BOARD_SIZE], Player *ia) {
 }
 
 void ia_play (WINDOW *win, Cell board[BOARD_SIZE][BOARD_SIZE], Player *human) {
-	return;
+	int row, col;
+	const int min_row = 0;
+	const int min_col = 0;
+	const int max_row = 9;
+	const int max_col = 9;
+
+	srand(time(NULL));
+
+	do {
+		row = min_row + rand() % (max_row + 1 - min_row);
+		col = min_col + rand() % (max_col + 1 - min_col);
+	} while (check_shot_possible(board, row, col) == 0);
+
+	hit(&board[row][col], human);
 }

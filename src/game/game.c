@@ -22,6 +22,8 @@ void main_loop(WINDOW *left_board, WINDOW *right_board) {
 		if (ia.boats_alive > 0) {
 			ia.play(right_board, human_board, &human);
 		}
+		
+		print_board_with_boat(human_board, right_board, "Player board");
 	} while (human.boats_alive > 0 && ia.boats_alive > 0);
 
 	unload_boats(&human);	
