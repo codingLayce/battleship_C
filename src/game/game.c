@@ -17,10 +17,10 @@ void main_loop(WINDOW *left_board, WINDOW *right_board) {
 	print_board_with_boat(human_board, right_board, "Player board");
 
 	do {
-		human.play(win, ia_board, &ia);
+		human.play(left_board, ia_board, &ia);
 
 		if (ia.boats_alive > 0) {
-			ia.play(win, ia_board, &human);
+			ia.play(right_board, human_board, &human);
 		}
 	} while (human.boats_alive > 0 && ia.boats_alive > 0);
 
