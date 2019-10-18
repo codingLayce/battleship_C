@@ -3,16 +3,20 @@
 #include "game.h"
 
 int main(){
-	WINDOW *board_win;
+	WINDOW *left_board, *right_board;
 
 	init_view();
-	board_win = create_board_win(0, 0, 50, 50);
+	left_board = create_board_win(0, 0, 25, 25);
+	right_board = create_board_win(0, 30, 25, 25);
 
-	main_loop(board_win);
 
-	wrefresh(board_win);
-	wgetch(board_win);
-	delwin(board_win);
+	main_loop(left_board, right_board);
+
+	wrefresh(left_board);
+	wrefresh(right_board);
+	wgetch(left_board);
+	delwin(left_board);
+	delwin(right_board);
 
 	end_view();	
 

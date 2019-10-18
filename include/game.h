@@ -8,6 +8,6 @@
 #include "config.h"
 #include "ncurses.h"
 
-void main_loop(WINDOW *win);
+void main_loop(WINDOW *left, WINDOW *right);
 
 #endif
