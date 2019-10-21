@@ -8,6 +8,7 @@
 #include "boat.h"
 #include "config.h"
 #include "ncurses.h"
+#include "view.h"
 
 void main_loop(WINDOW *left, WINDOW *right);
 
