@@ -91,8 +91,8 @@ void print_board_with_selection(Cell board[BOARD_SIZE][BOARD_SIZE], WINDOW *boar
 	print_board(board, board_win, board_name, 0, selected_row, selected_col);
 }
 
-char *get_coords (Cell board[BOARD_SIZE][BOARD_SIZE], WINDOW *board_win){
-	int row = 0, col = 0, ch;
+char *get_coords (Cell board[BOARD_SIZE][BOARD_SIZE], WINDOW *board_win, int row, int col){
+	int ch;
 	char *result = malloc(3 * sizeof(char));
 	do {
 		print_board_with_selection(board, board_win, "Player size", row, col);
@@ -113,8 +113,9 @@ char *get_coords (Cell board[BOARD_SIZE][BOARD_SIZE], WINDOW *board_win){
 	return result;
 }
 
-char *ask_boat_position(WINDOW *board_win, Cell origin_board[BOARD_SIZE][BOARD_SIZE],  Boat boat, Direction *direction, int row, int col){
+char *ask_boat_position(WINDOW *board_win, Cell origin_board[BOARD_SIZE][BOARD_SIZE],  Boat boat, Direction *direction){
 	Cell board[BOARD_SIZE][BOARD_SIZE];
+	int row = 0, col = 0;
 	int ch;
 	char *result = malloc(3 * sizeof(char));;
 	*direction = NORTH;
