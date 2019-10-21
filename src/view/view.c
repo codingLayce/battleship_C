@@ -25,30 +25,32 @@ void init_view(){
 void end_view(){
 	endwin();
 }
-/*
-int create_pop_up (char *ask, char * choices[], int number){
+
+void create_centered_pop_up (char *content){
 	int start_row, start_col, height, width;
-	int highlight = 0;
-	int i;
-	WINDOW *pop_win;
-
+	WINDOW *pop_up;
+	int row, col;
 	height = 10;
-	width = 20;
-
-	start_col = (COLS - width);
-	start_row = (LINES - height);
-
-	pop_win =  newwin(height, width, start_row, start_col);
+	width = 40;
 	
-	wattron(popo_win, POP_UP_PAIR)
-	wprintw(pop_win, "%s", ask);
+	start_col = (COLS / 2 - width);
+	start_row = (LINES / 2 - height);
 
-	for (i = 0; i < number; i++){
-		mvwprintw(pop_win, choices[i]);
+	pop_up = newwin(height, width, start_row, start_col);
+
+	wattron(pop_up, COLOR_PAIR(POP_UP_PAIR));
+	for (row = 0; row < height; row++){
+		for (col = 0; col < width; col++){
+			wprintw(pop_up, " ");
+		}
 	}
 	
-	wattroff(popo_win, POP_UP_PAIR);
-	delwin(pop_win);
-
-	return result;
-}*/
+	mvwprintw(pop_up, 5, 5, "%s", content);
+	wattroff(pop_up, COLOR_PAIR(POP_UP_PAIR));
+	
+	wrefresh(pop_up);
+	wgetch(pop_up);
+	wclear(pop_up);
+	wrefresh(pop_up);
+	delwin(pop_up);
+}
