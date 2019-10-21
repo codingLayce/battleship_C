@@ -3,12 +3,10 @@
 
 #include <ncurses.h>
 
-#define POP_UP_PAIR 6
 
 void init_view ();
 void end_view ();
 
-/* @return the selected choice */
-int create_pop_up (int start_row, int start_col, int height, int width, char *ask, char * choices, int number);
+void create_centered_pop_up (char *content);
 
 #endif

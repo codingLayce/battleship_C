@@ -9,5 +9,6 @@
 #define TOUCHED_BOAT_PAIR 4 
 #define SELECTED_PAIR 5
 #define SINK_BOAT_PAIR 6
+#define POP_UP_PAIR 7
 
 #endif
