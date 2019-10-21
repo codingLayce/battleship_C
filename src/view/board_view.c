@@ -152,7 +152,21 @@ char *ask_boat_position(WINDOW *board_win, Cell origin_board[BOARD_SIZE][BOARD_S
 				if (check_if_boat_feets_in_board (board, boat, row, col, NORTH))
 					*direction = NORTH;
 			}
-		}	
+		}else if (ch == 'R') {
+			if (*direction == NORTH){
+				if (check_if_boat_feets_in_board (board, boat, row, col, WEST))
+					*direction = WEST;
+			} else if (*direction == EAST){
+				if (check_if_boat_feets_in_board (board, boat, row, col, NORTH))
+					*direction = NORTH;
+			} else if (*direction == SOUTH){
+				if (check_if_boat_feets_in_board (board, boat, row, col, EAST))
+					*direction = EAST;
+			} else {
+				if (check_if_boat_feets_in_board (board, boat, row, col, SOUTH))
+					*direction = SOUTH;
+			}
+		}
 	}while (ch != '\n');
 	sprintf(result, "%c%d", 'A' + row, col);
 	return result;
