@@ -48,7 +48,8 @@ void ask_player_to_place_boats(WINDOW *win, Cell board[BOARD_SIZE][BOARD_SIZE], 
 	}
 }
 
-void unload_boats(Player *player) {
+
+void unload_player(Player *player) {
 	int i;
 	
 	for (i =  0; i < 5; i++) {
@@ -99,9 +100,11 @@ void place_ia_boats(Cell board[BOARD_SIZE][BOARD_SIZE], Player *player) {
 void player_play (WINDOW *win, Cell board[BOARD_SIZE][BOARD_SIZE], Player *human, Player *ia, int turn) {
 	char *coords;
 	int row, col;
-	char previous_shot[2];
-
-	strcpy(previous_shot, human->history[turn-1]);
+	char previous_shot[3] = "A0";
+	
+	if (turn > 0) {
+		strcpy(previous_shot, human->history[turn-1]);
+	}
 
 	do {
 		coords = get_coords(board, win, previous_shot[0] - 'A', previous_shot[1] - '0');
@@ -115,7 +118,6 @@ void player_play (WINDOW *win, Cell board[BOARD_SIZE][BOARD_SIZE], Player *human
 	} while (check_shot_possible(board, row, col) == 0);
 
 	hit(&board[row][col], ia);
-	human->history[turn] = malloc(sizeof(char) * 2);
 	strcpy(human->history[turn], coords); 
 	free(coords);
 }
@@ -139,6 +141,5 @@ void ia_play (WINDOW *win, Cell board[BOARD_SIZE][BOARD_SIZE], Player *human, Pl
 	coords[1] = col + '0';
 
 	hit(&board[row][col], human);
-	ia->history[turn] = malloc(sizeof(char) * 2);
 	strcpy(ia->history[turn], coords);
 }

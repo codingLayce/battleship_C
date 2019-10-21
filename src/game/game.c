@@ -4,6 +4,7 @@ void main_loop(WINDOW *left_board, WINDOW *right_board) {
 	Cell human_board[BOARD_SIZE][BOARD_SIZE], ia_board[BOARD_SIZE][BOARD_SIZE];
 	Player human, ia;
 	int turn = 0;
+	char *win_message;
 
 	player_factory(&human, HUMAN);
 	player_factory(&ia, IA);
@@ -28,7 +29,18 @@ void main_loop(WINDOW *left_board, WINDOW *right_board) {
 		turn++;
 	} while (human.boats_alive > 0 && ia.boats_alive > 0);
 
-	unload_boats(&human);	
-	unload_boats(&ia);
+	if (human.boats_alive <= 0) { /* IA win  */
+		win_message = malloc(sizeof(char) * strlen("Victoire de l'IA !") + 1);
+		strcpy(win_message, "Victoire de l'IA !");
+	} else { /* Human win  */
+		win_message = malloc(sizeof(char) * strlen("Victoire du joueur !") + 1);
+		strcpy(win_message, "Victoire du joueur !");
+	}
+	
+	create_centered_pop_up(win_message);	
+	
+	free(win_message);
+	unload_player(&human);	
+	unload_player(&ia);
 }
 

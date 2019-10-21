@@ -18,7 +18,7 @@ struct Player {
 	int boats_alive;
 	void (*play) (WINDOW *win, Cell board[BOARD_SIZE][BOARD_SIZE], Player *human, Player *ia, int turn);
 	Boat *boats[5];
-	char *history[100];
+	char history[100][2];
 };
 
 void player_factory (Player *player, Player_type type);
@@ -33,7 +33,7 @@ void ask_player_to_place_one_boat(WINDOW *win, Cell board[BOARD_SIZE][BOARD_SIZE
 
 void place_ia_boats(Cell board[BOARD_SIZE][BOARD_SIZE], Player *player);
 
-void unload_boats(Player *player);
+void unload_player(Player *player);
 
 void player_play(WINDOW *win, Cell board[BOARD_SIZE][BOARD_SIZE], Player *human, Player *ia, int turn);
 

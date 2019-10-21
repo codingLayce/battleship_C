@@ -11,6 +11,7 @@ int main(){
 		left_board = create_board_win(0, 0, 25, 25);
 		right_board = create_board_win(0, 30, 25, 25);
 
+<<<<<<< HEAD
 		control_panel = newwin(25, 26, 15, 0);
 		wprintw(control_panel, "z q s d to move the cursor on the board.");
 		wrefresh(control_panel);
@@ -19,6 +20,13 @@ int main(){
 
 		wrefresh(left_board);
 		wrefresh(right_board);
+=======
+	control_panel = newwin(25, 26, 15, 0);
+	wprintw(control_panel, "z q s d to move the cursor on the board.");
+	wrefresh(control_panel);
+
+	main_loop(left_board, right_board);
+>>>>>>> cbce2e12e8fafd8b90fbea0fd2b99e6e7d235e21
 
 		wgetch(left_board);
 
