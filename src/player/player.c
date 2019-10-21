@@ -99,9 +99,12 @@ void place_ia_boats(Cell board[BOARD_SIZE][BOARD_SIZE], Player *player) {
 void player_play (WINDOW *win, Cell board[BOARD_SIZE][BOARD_SIZE], Player *human, Player *ia, int turn) {
 	char *coords;
 	int row, col;
+	char previous_shot[2];
+
+	strcpy(previous_shot, human->history[turn-1]);
 
 	do {
-		coords = get_coords(board, win);
+		coords = get_coords(board, win, previous_shot[0] - 'A', previous_shot[1] - '0');
 		
 		row = coords[0] - 'A';
 		col = coords[1] - '0';
