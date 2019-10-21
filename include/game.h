@@ -1,6 +1,7 @@
 #ifndef GAME_H_GUARD
 #define GAME_H_GUARD
 
+#include <string.h>
 #include "board.h"
 #include "cell.h"
 #include "player.h"
