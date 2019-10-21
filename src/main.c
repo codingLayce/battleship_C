@@ -6,7 +6,6 @@ int main(){
 	WINDOW *left_board, *right_board, *control_panel;
 
 	init_view();
-
 	left_board = create_board_win(0, 0, 25, 25);
 	right_board = create_board_win(0, 30, 25, 25);
 

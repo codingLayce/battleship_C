@@ -3,8 +3,8 @@
 
 void init_view(){
 	initscr();
-	/* cbreak(); */
-	raw();
+	noecho();
+	cbreak();
 	curs_set(0);
 
 	if(has_colors() == FALSE){
@@ -99,9 +99,7 @@ do {
 } while (ch != '\n');
 
 	wattroff(pop_up, A_REVERSE);
-	wrefresh(pop_up);
-	wgetch(pop_up);
-	wclear(pop_up);
+
 	wrefresh(pop_up);
 	delwin(pop_up);
 	return selection;
