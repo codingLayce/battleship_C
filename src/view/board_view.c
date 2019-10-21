@@ -113,9 +113,8 @@ char *get_coords (Cell board[BOARD_SIZE][BOARD_SIZE], WINDOW *board_win){
 	return result;
 }
 
-char *ask_boat_position(WINDOW *board_win, Cell origin_board[BOARD_SIZE][BOARD_SIZE],  Boat boat, Direction *direction){
+char *ask_boat_position(WINDOW *board_win, Cell origin_board[BOARD_SIZE][BOARD_SIZE],  Boat boat, Direction *direction, int row, int col){
 	Cell board[BOARD_SIZE][BOARD_SIZE];
-	int row = 0, col = 0;
 	int ch;
 	char *result = malloc(3 * sizeof(char));;
 	*direction = NORTH;
