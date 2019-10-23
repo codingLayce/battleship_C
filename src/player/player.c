@@ -26,6 +26,9 @@ void new_player (Player *player, int boats_alive, void (*play)(WINDOW *win, Cell
 		player->boats[i] = malloc(sizeof(Boat));
 		boat_factory(player->boats[i], boats[i]);
 	}
+	for (i = 0; i < 100; i++) {
+		strcpy(player->history[i], "--");
+	}
 }
 
 void hit (Cell *cell, Player *hit_player) {

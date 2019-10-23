@@ -14,6 +14,6 @@
 
 void main_loop(WINDOW *left, WINDOW *right);
 
-void save(Player human, Player ia, Cell human_board[BOARD_SIZE][BOARD_SIZE], Cell ia_board[BOARD_SIZE][BOARD_SIZE]);
+void save(Player human, Player ia);
 void load(Player *human, Player *ia, Cell human_board[BOARD_SIZE][BOARD_SIZE], Cell ia_board[BOARD_SIZE][BOARD_SIZE]);
 #endif

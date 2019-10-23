@@ -11,7 +11,7 @@ void on_signal_reception (int sig) {
 		res = create_yes_no_pop_up("Voulez-vous sauvegarder ?");
 		end_view();
 		if (res == 0) {
-			save(human, ia, human_board, ia_board);	
+			save(human, ia);	
 			printf("Game saved !\n");
 		}
 
@@ -38,6 +38,12 @@ void main_loop(WINDOW *left_board, WINDOW *right_board) {
 
 		if (res == 0) {
 			load(&human, &ia, human_board, ia_board);
+		} else {	
+			place_ia_boats(ia_board, &ia);
+			print_board_without_boat(ia_board, left_board, "IA board");
+
+			ask_player_to_place_boats(right_board, human_board, &human);
+			print_board_with_boat(human_board, right_board, "Player board");
 		}
 
 		fclose(savefile);
@@ -78,10 +84,21 @@ void main_loop(WINDOW *left_board, WINDOW *right_board) {
 	unload_player(&ia);
 }
 
-void save(Player human, Player ia, Cell human_board[BOARD_SIZE][BOARD_SIZE], Cell ia_board[BOARD_SIZE][BOARD_SIZE]){
+void save(Player human, Player ia){
 	char filename[] = "game.save";
 	FILE *savefile;
+	int i;
+
 	savefile = fopen(filename, "w+");
+	
+	for (i = 0; i < 5; i++) {
+		fwrite(human.boats[i], sizeof(Boat), 1, savefile);
+		fwrite(ia.boats[i], sizeof(Boat), 1, savefile);
+	}
+	for (i = 0; i < 100; i++) {
+		fwrite(human.history[i], sizeof(char) * 2, 1, savefile);
+		fwrite(ia.history[i], sizeof(char) * 2, 1, savefile);
+	}
 
 	fclose(savefile);
 }
