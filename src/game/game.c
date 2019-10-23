@@ -1,5 +1,22 @@
 #include "game.h"
 
+void on_signal_reception (int sig) {
+	int res;
+
+	if (sig == SIGINT) {	
+		res = create_yes_no_pop_up("Voulez-vous sauvegarder ?");
+		end_view();
+		if (res == 0) {
+			printf("OUI\n");	
+		} else {
+			printf("NON\n");
+		}
+
+		sleep(2);
+		exit(1);
+	}
+}
+
 void main_loop(WINDOW *left_board, WINDOW *right_board) {
 	Cell human_board[BOARD_SIZE][BOARD_SIZE], ia_board[BOARD_SIZE][BOARD_SIZE];
 	Player human, ia;
@@ -17,6 +34,8 @@ void main_loop(WINDOW *left_board, WINDOW *right_board) {
 	
 	ask_player_to_place_boats(right_board, human_board, &human);
 	print_board_with_boat(human_board, right_board, "Player board");
+
+	signal(SIGINT, on_signal_reception);
 
 	do {
 		human.play(left_board, ia_board, &human, &ia, turn);
