@@ -1,5 +1,9 @@
 #include "game.h"
 
+/* Global variables because without we can't save when receiving the SIGINT signal  */
+Cell human_board[BOARD_SIZE][BOARD_SIZE], ia_board[BOARD_SIZE][BOARD_SIZE];
+Player human, ia;
+
 void on_signal_reception (int sig) {
 	int res;
 
@@ -7,9 +11,8 @@ void on_signal_reception (int sig) {
 		res = create_yes_no_pop_up("Voulez-vous sauvegarder ?");
 		end_view();
 		if (res == 0) {
-			printf("OUI\n");	
-		} else {
-			printf("NON\n");
+			save(human, ia, human_board, ia_board);	
+			printf("Game saved !\n");
 		}
 
 		sleep(2);
@@ -18,23 +21,35 @@ void on_signal_reception (int sig) {
 }
 
 void main_loop(WINDOW *left_board, WINDOW *right_board) {
-	Cell human_board[BOARD_SIZE][BOARD_SIZE], ia_board[BOARD_SIZE][BOARD_SIZE];
-	Player human, ia;
 	int turn = 0;
 	char *win_message;
+	FILE *savefile;
 
 	player_factory(&human, HUMAN);
 	player_factory(&ia, IA);
 
 	new_board(human_board);
 	new_board(ia_board);
-
-	place_ia_boats(ia_board, &ia);
-	print_board_without_boat(ia_board, left_board, "IA board");
 	
-	ask_player_to_place_boats(right_board, human_board, &human);
-	print_board_with_boat(human_board, right_board, "Player board");
+	savefile = fopen("game.save", "r");
+	if (savefile != NULL) {
+		int res;
+		res = create_yes_no_pop_up("Voulez-vous reprendre votre partie ?");
 
+		if (res == 0) {
+			load(&human, &ia, human_board, ia_board);
+		}
+
+		fclose(savefile);
+		remove("game.save");
+	} else {
+		place_ia_boats(ia_board, &ia);
+		print_board_without_boat(ia_board, left_board, "IA board");
+
+		ask_player_to_place_boats(right_board, human_board, &human);
+		print_board_with_boat(human_board, right_board, "Player board");
+	}
+		
 	signal(SIGINT, on_signal_reception);
 
 	do {
@@ -63,26 +78,22 @@ void main_loop(WINDOW *left_board, WINDOW *right_board) {
 	unload_player(&ia);
 }
 
-void fwrite_board(Cell board[BOARD_SIZE][BOARD_SIZE], FILE *savefile){
-	int col, row;
-	for (row = 0; row < BOARD_SIZE; row++){
-		for (col = 0; col < BOARD_SIZE; col++){
-			fwrite(&board[row][col], sizeof(Cell), 1, savefile);	
-		}
-	}
-}
-
 void save(Player human, Player ia, Cell human_board[BOARD_SIZE][BOARD_SIZE], Cell ia_board[BOARD_SIZE][BOARD_SIZE]){
 	char filename[] = "game.save";
 	FILE *savefile;
 	savefile = fopen(filename, "w+");
 
-	fwrite(&human, sizeof(Player), 1, savefile);
-	fwrite(&ia, sizeof(Player), 1, savefile);
+	fclose(savefile);
+}
 
-	fwrite_board(human_board, savefile);
-	fwrite_board(ia_board, savefile);
+void load(Player *human, Player *ia, Cell human_board[BOARD_SIZE][BOARD_SIZE], Cell ia_board[BOARD_SIZE][BOARD_SIZE]) {
+	char filename[] = "game.save";
+	FILE *savefile = fopen(filename, "w+");
+	savefile = fopen(filename, "w+");
+
+	if (savefile == NULL) {
+		return;
+	}
 
 	fclose(savefile);
-
 }

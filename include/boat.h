@@ -9,6 +9,9 @@ typedef struct {
 	char boat_char;
 	int size;
 	int hits;
+	int start_row;
+	int start_col;
+	Direction direction;
 } Boat;
 
 void boat_factory(Boat *boat, Boat_type type);

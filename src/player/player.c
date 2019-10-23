@@ -72,6 +72,9 @@ void ask_player_to_place_one_boat(WINDOW *win, Cell board[BOARD_SIZE][BOARD_SIZE
 	} while (check_if_boat_feets_in_board(board, *boat, row, col, direction) == 0);
 		
 	place_boat(board, boat, row, col, direction);
+	boat->start_row = row;
+	boat->start_col = col;
+	boat->direction = direction;
 	player->boats_alive++;
 }
 
@@ -92,6 +95,9 @@ void place_ia_boats(Cell board[BOARD_SIZE][BOARD_SIZE], Player *player) {
 			dir = 0 + rand() % (3 + 1 - 0);
 		} while (check_if_boat_feets_in_board(board, *player->boats[i], row, col, dirs[dir]) == 0);
 		
+		player->boats[i]->start_row = row;
+		player->boats[i]->start_col = col;
+		player->boats[i]->direction = dirs[dir];
 		place_boat(board, player->boats[i], row, col, dirs[dir]);
 		player->boats_alive++;
 	}

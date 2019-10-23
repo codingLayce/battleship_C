@@ -28,6 +28,9 @@ void new_boat(Boat *boat, char boat_char, int size, int hits){
 	boat->boat_char = boat_char;
 	boat->size = size;
 	boat->hits = hits;
+	boat->start_row = -1;
+	boat->start_col = -1;
+	boat->direction = NORTH;
 }
 
 
