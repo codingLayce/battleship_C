@@ -104,12 +104,38 @@ void save(Player human, Player ia){
 }
 
 void load(Player *human, Player *ia, Cell human_board[BOARD_SIZE][BOARD_SIZE], Cell ia_board[BOARD_SIZE][BOARD_SIZE]) {
+	int i, row, col;
+	char shot[3];
 	char filename[] = "game.save";
 	FILE *savefile = fopen(filename, "w+");
 	savefile = fopen(filename, "w+");
 
 	if (savefile == NULL) {
 		return;
+	}
+
+	for (i = 0; i < 5; i++){
+		Boat *ia_boat = ia->boats[i], *human_boat = human->boats[i];
+		fread(human_boat, sizeof(Boat), 1, savefile);
+		fread(ia_boat, sizeof(Boat), 1, savefile);
+		place_boat(human_board, human_boat, human_boat->start_row, human_boat->start_col, human_boat->direction);
+		place_boat(ia_board, ia_boat, ia_boat->start_row, ia_boat->start_col, ia_boat->direction);
+	}
+
+	for (i = 0; i < 100; i++){
+		fread(shot, sizeof(char), 2, savefile);
+		if (shot[0] != '-'){
+			row = shot[0] - 'A';
+			col = shot[1] - '0';
+			hit(&ia_board[row][col], ia);
+		}
+
+		fread(shot, sizeof(char), 2, savefile);
+		if (shot[0] != '-'){
+			row = shot[0] - 'A';
+			col = shot[1] - '0';
+			hit(&human_board[row][col], human);
+		}
 	}
 
 	fclose(savefile);
