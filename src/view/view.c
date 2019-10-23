@@ -34,7 +34,7 @@ void create_centered_pop_up (char *content){
 	int row, col;
 	height = 10;
 	width = 40;
-	
+
 	start_col = (COLS / 2 - width);
 	start_row = (LINES / 2 - height);
 
@@ -46,10 +46,10 @@ void create_centered_pop_up (char *content){
 			wprintw(pop_up, " ");
 		}
 	}
-	
-	mvwprintw(pop_up, 5, 5, "%s", content);
+
+	mvwprintw(pop_up, 3, 3, "%s", content);
 	wattroff(pop_up, COLOR_PAIR(POP_UP_PAIR));
-	
+
 	wrefresh(pop_up);
 	wgetch(pop_up);
 	wclear(pop_up);
@@ -64,7 +64,7 @@ int create_yes_no_pop_up(char *ask){
 	int selection = 1, ch;
 	height = 10;
 	width = 40;
-	
+
 	start_col = (COLS / 2 - width);
 	start_row = (LINES / 2 - height);
 
@@ -76,27 +76,27 @@ int create_yes_no_pop_up(char *ask){
 			wprintw(pop_up, " ");
 		}
 	}
-	
-	mvwprintw(pop_up, 5, 5, "%s", ask);
+
+	mvwprintw(pop_up, 3, 3, "%s", ask);
 	wattroff(pop_up, COLOR_PAIR(POP_UP_PAIR));
-do {
-	if (selection == 0)
-		wattron(pop_up, A_REVERSE);
-	mvwprintw(pop_up, 7, 3, "NON");
-	wattroff(pop_up, A_REVERSE);
+	do {
+		if (selection == 0)
+			wattron(pop_up, A_REVERSE);
+		mvwprintw(pop_up, 7, 3, "NON");
+		wattroff(pop_up, A_REVERSE);
 
-	if (selection == 1)
-		wattron(pop_up, A_REVERSE);
-	mvwprintw(pop_up, 7, width - 6, "OUI");
-	wattroff(pop_up, A_REVERSE);
-	
-	ch = wgetch(pop_up);
+		if (selection == 1)
+			wattron(pop_up, A_REVERSE);
+		mvwprintw(pop_up, 7, width - 6, "OUI");
+		wattroff(pop_up, A_REVERSE);
 
-	if (ch == 'q' && selection < 1)
-		selection++; 
-	if (ch == 'd' && selection > 0)
-		selection--;
-} while (ch != '\n');
+		ch = wgetch(pop_up);
+
+		if (ch == 'q' && selection < 1)
+			selection++; 
+		if (ch == 'd' && selection > 0)
+			selection--;
+	} while (ch != '\n');
 
 	wattroff(pop_up, A_REVERSE);
 

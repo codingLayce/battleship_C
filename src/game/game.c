@@ -63,3 +63,26 @@ void main_loop(WINDOW *left_board, WINDOW *right_board) {
 	unload_player(&ia);
 }
 
+void fwrite_board(Cell board[BOARD_SIZE][BOARD_SIZE], FILE *savefile){
+	int col, row;
+	for (row = 0; row < BOARD_SIZE; row++){
+		for (col = 0; col < BOARD_SIZE; col++){
+			fwrite(&board[row][col], sizeof(Cell), 1, savefile);	
+		}
+	}
+}
+
+void save(Player human, Player ia, Cell human_board[BOARD_SIZE][BOARD_SIZE], Cell ia_board[BOARD_SIZE][BOARD_SIZE]){
+	char filename[] = "game.save";
+	FILE *savefile;
+	savefile = fopen(filename, "w+");
+
+	fwrite(&human, sizeof(Player), 1, savefile);
+	fwrite(&ia, sizeof(Player), 1, savefile);
+
+	fwrite_board(human_board, savefile);
+	fwrite_board(ia_board, savefile);
+
+	fclose(savefile);
+
+}
