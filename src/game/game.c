@@ -96,8 +96,8 @@ void save(Player human, Player ia){
 		fwrite(ia.boats[i], sizeof(Boat), 1, savefile);
 	}
 	for (i = 0; i < 100; i++) {
-		fwrite(human.history[i], sizeof(char) * 2, 1, savefile);
-		fwrite(ia.history[i], sizeof(char) * 2, 1, savefile);
+		fwrite(human.history[i], sizeof(char), 2, savefile);
+		fwrite(ia.history[i], sizeof(char), 2, savefile);
 	}
 
 	fclose(savefile);
