@@ -98,10 +98,10 @@ void place_ia_boats(Cell board[BOARD_SIZE][BOARD_SIZE], Player *player) {
 			dir = 0 + rand() % (3 + 1 - 0);
 		} while (check_if_boat_feets_in_board(board, *player->boats[i], row, col, dirs[dir]) == 0);
 		
+		place_boat(board, player->boats[i], row, col, dirs[dir]);
 		player->boats[i]->start_row = row;
 		player->boats[i]->start_col = col;
 		player->boats[i]->direction = dirs[dir];
-		place_boat(board, player->boats[i], row, col, dirs[dir]);
 		player->boats_alive++;
 	}
 }
