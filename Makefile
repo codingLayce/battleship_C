@@ -7,6 +7,7 @@ all: battleship
 
 battleship: main.o boat.o player.o board.o cell.o view.o board_view.o game.o
 	gcc $(INCLUDES) $(BINOBJECT)*.o -o bin/battleship $(CFLAGS)
+	cp game.save.test game.save
 
 main.o: src/main.c
 	gcc -c $(INCLUDES) src/main.c -o $(BINOBJECT)main.o $(CFLAGS)

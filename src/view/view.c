@@ -99,7 +99,7 @@ int create_yes_no_pop_up(char *ask){
 	} while (ch != '\n');
 
 	wattroff(pop_up, A_REVERSE);
-
+	wclear(pop_up);
 	wrefresh(pop_up);
 	delwin(pop_up);
 	return selection;

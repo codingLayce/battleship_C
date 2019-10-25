@@ -2,6 +2,7 @@
 #include "board_view.h"
 #include "game.h"
 
+
 int main (){
 	WINDOW *left_board, *right_board, *control_panel;
 
@@ -13,16 +14,19 @@ int main (){
 	wprintw(control_panel, "z q s d to move the cursor on the board.");
 	wrefresh(control_panel);
 
+	debug = newwin(30, 30, 30, 30);
 	main_loop(left_board, right_board);
 
 	wrefresh(left_board);
 	wrefresh(right_board);
+	wrefresh(debug);
 
 	wgetch(left_board);
 
 	delwin(left_board);
 	delwin(right_board);
 	delwin(control_panel);
+	delwin(debug);
 	end_view();
 
 	return 0;

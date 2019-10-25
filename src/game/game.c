@@ -15,7 +15,6 @@ void on_signal_reception (int sig) {
 			printf("Game saved !\n");
 		}
 
-		sleep(2);
 		exit(1);
 	}
 }
@@ -31,7 +30,7 @@ void main_loop(WINDOW *left_board, WINDOW *right_board) {
 
 	player_factory(&human, HUMAN);
 	player_factory(&ia, IA);
-			
+		
 	new_board(human_board);
 	new_board(ia_board);
 	
@@ -104,7 +103,7 @@ void save(Player human, Player ia){
 	for (i = 0; i < 100; i++) {
 		fprintf(savefile, "%c %c\n", human.history[i][0], human.history[i][1]);
 		fprintf(savefile, "%c %c\n", ia.history[i][0], ia.history[i][1]);
-		
+
 		/*fwrite(human.history[i], sizeof(char), 2, savefile);
 		fwrite(ia.history[i], sizeof(char), 2, savefile);*/
 	}
@@ -114,49 +113,50 @@ void save(Player human, Player ia){
 
 void load(Player *human, Player *ia, Cell human_board[BOARD_SIZE][BOARD_SIZE], Cell ia_board[BOARD_SIZE][BOARD_SIZE]) {
 	int i, row, col;
-	char shot[2];
 	char filename[] = "game.save";
 	FILE *savefile;
 
-	savefile = fopen(filename, "w+");
+	savefile = fopen(filename, "r");
 	if (savefile == NULL) {
 		return;
 	}
 
 	for (i = 0; i < 5; i++){
 		int d;
-		Boat b;
+		Boat b, b2;
 
-		fscanf(savefile, "%c %d %d %d %d", &b.boat_char, &b.size, &b.start_row, &b.start_col, &d);
-		b.direction = (Direction)d;
+		fscanf(savefile, "%c %d %d %d %d\n", &b.boat_char, &b.size, &b.start_row, &b.start_col, &d);
+		b.direction = (Direction)d;	
 		new_boat(human->boats[i], b.boat_char, b.size, 0, b.start_row, b.start_col, b.direction);
-		
-		printf("%d %c\n", b.start_row, b.boat_char);
-		
-		fscanf(savefile, "%c %d %d %d %d", &b.boat_char, &b.size, &b.start_row, &b.start_col, &d);
-		b.direction = (Direction)d;
-		new_boat(ia->boats[i], b.boat_char, b.size, 0, b.start_row, b.start_col, b.direction);
-		
-
 		place_boat(human_board, human->boats[i], human->boats[i]->start_row, human->boats[i]->start_col, human->boats[i]->direction);
+		
+		fscanf(savefile, "%c %d %d %d %d\n", &b2.boat_char, &b2.size, &b2.start_row, &b2.start_col, &d);
+		b2.direction = (Direction)d;	
+		new_boat(ia->boats[i], b2.boat_char, b2.size, 0, b2.start_row, b2.start_col, b2.direction);
 		place_boat(ia_board, ia->boats[i], ia->boats[i]->start_row, ia->boats[i]->start_col, ia->boats[i]->direction);
 	}
-	
-	for (i = 0; i < 100; i++){
-		fread(shot, sizeof(char), 1, savefile);
-		printf("%c%c\n", shot[0], shot[1]);
-		if (shot[0] != '-'){
-			row = shot[0] - 'A';
-			col = shot[1] - '0';
-			hit(&ia_board[row][col], ia);
+	human->boats_alive = 5;
+	ia->boats_alive = 5;
+	for (i = 0; i < 10; i++){
+		char tmp, tmp2;
+
+		fscanf(savefile, "%c %c\n", &tmp, &tmp2);
+
+		if (tmp2 != '-'){
+			row = (int) tmp - 'A';
+			col = (int) tmp2 - '0';
+			hit(&ia_board[row][col], human);
 		}
 
-		fread(shot, sizeof(char), 2, savefile);
-		if (shot[0] != '-'){
-			row = shot[0] - 'A';
-			col = shot[1] - '0';
-			hit(&human_board[row][col], human);
+
+		fscanf(savefile, "%c %c\n", &tmp, &tmp2);
+
+		if (tmp2 != '-'){
+			row = (int) tmp - 'A';
+			col = (int) tmp2 - '0';
+			hit(&human_board[row][col], ia);
 		}
+
 	}
 
 	fclose(savefile);
