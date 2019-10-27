@@ -138,7 +138,6 @@ void ia_play (WINDOW *win, Cell board[BOARD_SIZE][BOARD_SIZE], Player *human, Pl
 	const int max_row = 9;
 	const int max_col = 9;
 	char coords[2];
-
 	srand(time(NULL));
 		
 	do {
@@ -151,4 +150,5 @@ void ia_play (WINDOW *win, Cell board[BOARD_SIZE][BOARD_SIZE], Player *human, Pl
 
 	hit(&board[row][col], human);
 	strcpy(ia->history[turn], coords);
+	wrefresh(win);
 }

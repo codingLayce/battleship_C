@@ -1,0 +1,17 @@
+mmorin@cybele:~/dev/c/naval_battle_game_C$ valgrind --leak-check=full bin/battleship
+==16123== HEAP SUMMARY:
+==16123==     in use at exit: 283,029 bytes in 277 blocks
+==16123==   total heap usage: 330 allocs, 53 frees, 309,350 bytes allocated
+==16123==
+==16123== LEAK SUMMARY:
+==16123==    definitely lost: 0 bytes in 0 blocks
+==16123==    indirectly lost: 0 bytes in 0 blocks
+==16123==      possibly lost: 0 bytes in 0 blocks
+==16123==    still reachable: 283,029 bytes in 277 blocks
+==16123==         suppressed: 0 bytes in 0 blocks
+==16123== Reachable blocks (those to which a pointer was found) are not shown.
+==16123== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==16123==
+==16123== For counts of detected and suppressed errors, rerun with: -v
+==16123== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+

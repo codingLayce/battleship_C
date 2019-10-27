@@ -49,7 +49,7 @@ MU_TEST (test_ia_factory) {
 	player_factory(&ia, IA);
 
 	mu_assert(ia.boats_alive == 0, "The boats_alive isn't `0`");
-	mu_assert(ia.play == NULL, "The play function isn't `NUKK`");
+	mu_assert(ia.play == ia_play, "The play function isn't `ia_play`");
 }
 
 MU_TEST (test_player_factory) {
@@ -58,7 +58,7 @@ MU_TEST (test_player_factory) {
 	player_factory(&player, HUMAN);
 
 	mu_assert(player.boats_alive == 0, "The boats_alive isn't `0`");
-	mu_assert(player.play == NULL, "The play function isn't `NUKK`");	
+	mu_assert(player.play == player_play, "The play function isn't `player_play`");	
 }
 
 MU_TEST_SUITE (test_suite) {
