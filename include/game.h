@@ -12,8 +12,6 @@
 #include "ncurses.h"
 #include "view.h"
 
-WINDOW *debug;
-
 void main_loop(WINDOW *left, WINDOW *right);
 
 void save(Player human, Player ia);
